@@ -2,13 +2,13 @@ package com.OnlineBooking.OnlineBooking.Model;
 
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @Component
-public class EventBooking implements Booking
+public class EventBooking extends Booking
 {
-    ArrayList<EventBooking> events = new ArrayList<>();
+    public  static  ArrayList<EventBooking> events = new ArrayList<>();
+
 
 
     private int eventID;
@@ -17,19 +17,26 @@ public class EventBooking implements Booking
     private String eventDate;
     private String eventDescription;
     private int TotalTickets;
+    private int Price;
     private int AvailableTickets;
+    public String BookingID;
+    public String BookingDate ;
+    public String UserID;
 
     public EventBooking(){};
-    public EventBooking(int eventID, String eventName, String eventLocation, String eventDescription, String eventDate, int totalTickets) {
+    public EventBooking(int eventID, String eventName, String eventLocation, String eventDescription, String eventDate, int totalTickets,int Price) {
         this.eventID = eventID;
         this.eventName = eventName;
         this.eventLocation = eventLocation;
         this.eventDescription = eventDescription;
         this.eventDate = eventDate;
-        TotalTickets = totalTickets;
+        this.TotalTickets= totalTickets;
+        this.Price = Price;
     }
 
-    public int getEventID() {
+    public int getEventID()
+    {
+        System.out.print("Event ID: " + eventID);
         return eventID;
     }
 
@@ -37,7 +44,9 @@ public class EventBooking implements Booking
         this.eventID = eventID;
     }
 
-    public String getEventName() {
+    public String getEventName()
+    {
+        System.out.print("Event Name: " + eventName);
         return eventName;
     }
 
@@ -45,7 +54,9 @@ public class EventBooking implements Booking
         this.eventName = eventName;
     }
 
-    public String getEventLocation() {
+    public String getEventLocation()
+    {
+        System.out.print("Event Location: " + eventLocation);
         return eventLocation;
     }
 
@@ -53,7 +64,9 @@ public class EventBooking implements Booking
         this.eventLocation = eventLocation;
     }
 
-    public String getEventDate() {
+    public String getEventDate()
+    {
+        System.out.print("Event Date: " + eventDate);
         return eventDate;
     }
 
@@ -61,7 +74,9 @@ public class EventBooking implements Booking
         this.eventDate = eventDate;
     }
 
-    public String getEventDescription() {
+    public String getEventDescription()
+    {
+        System.out.print("Event Description: " + eventDescription);
         return eventDescription;
     }
 
@@ -69,7 +84,9 @@ public class EventBooking implements Booking
         this.eventDescription = eventDescription;
     }
 
-    public int getTotalTickets() {
+    public int getTotalTickets()
+    {
+        System.out.print("Total Tickets: " + TotalTickets);
         return TotalTickets;
     }
 
@@ -77,7 +94,9 @@ public class EventBooking implements Booking
         TotalTickets = totalTickets;
     }
 
-    public int getAvailableTickets() {
+    public int getAvailableTickets()
+    {
+        System.out.print("Available Tickets: " + AvailableTickets);
         return AvailableTickets;
     }
 
@@ -85,36 +104,35 @@ public class EventBooking implements Booking
         AvailableTickets = availableTickets;
     }
 
-    public boolean addevent(EventBooking e)
+    public int getPrice()
+    {
+        System.out.print("Price: " + Price);
+        return Price;
+    }
+
+    public void setPrice(int price) {
+        Price = price;
+    }
+
+    public void addEvent(EventBooking e)
     {
         events.add(e);
-        return true;
     }
-    public  boolean getevent(EventBooking e)
+    public void RemoveEvent(EventBooking e)
     {
-        return events.contains(e);
+        events.remove(e);
     }
 
-
-
-
-    @Override
-    public boolean confirmBooking() {
-        return true;
-    }
-
-    @Override
-    public boolean cancelBooking() {
-        return true;
-    }
-    public boolean NumAvaliableTtickets(EventBooking e,String EvnetName)
+    public static EventBooking FindByEventName(String eventName)
     {
-        if(e.getEventName().equals(EvnetName))
+        for(EventBooking e : events)
         {
-            e.setAvailableTickets(AvailableTickets--);
+            if(e.getEventName().equals(eventName))
+            {
+                return e;
+            }
         }
-
-        return true;
+        return null;
     }
 
 }

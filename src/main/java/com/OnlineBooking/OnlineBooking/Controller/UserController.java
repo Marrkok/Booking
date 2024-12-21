@@ -19,27 +19,37 @@ public class UserController
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User loginRequest) {
-       try{ String email = loginRequest.getEmail();
-        String password = loginRequest.getPassword();
+        try{ String email = loginRequest.getEmail();
+            String password = loginRequest.getPassword();
 
-        User user = User.findByEmail(email);
-        if (user == null || !user.getPassword().equals(password)) {
-            return ResponseEntity.status(401).body("Invalid email or password");
+            User user = User.findByEmail(email);
+            if (!userService.login(loginRequest)) {
+                return ResponseEntity.status(401).body("Invalid email or password");
+            }
+
+            return ResponseEntity.ok("Login successful");}
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
         }
-
-        return ResponseEntity.ok("Login successful");}
-       catch (Exception e) {
-           System.out.println(e.getMessage());
-           return null;
-       }
     }
     @PostMapping("/register")
-    public boolean Register(@RequestBody User reginfo)
+    public ResponseEntity<String> Register(@RequestBody User reginfo)
     {
-        try {return userService.register(reginfo);}
+        try {
+            if(userService.register(reginfo))
+            {
+                return ResponseEntity.ok("User registered successfully");
+            }
+            else
+            {
+                return ResponseEntity.status(401).body("email already exists");
+            }
+        }
         catch (Exception e){
-            System.out.println("error registering user"+e.getMessage());
-            return false;
+
+            String message="error registering user"+e.getMessage() ;
+            return ResponseEntity.status(500).body(message);
         }
     }
     @GetMapping("/getem")

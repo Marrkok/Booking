@@ -1,17 +1,9 @@
 package com.OnlineBooking.OnlineBooking.Model;
 
 
-public class HotelBooking implements Booking
+public class HotelBooking extends Booking
 {
-    @Override
-    public boolean confirmBooking() {
-        return true;
-    }
 
-    @Override
-    public boolean cancelBooking() {
-        return false;
-    }
 
     private int hotelId;
     private String hotelName;

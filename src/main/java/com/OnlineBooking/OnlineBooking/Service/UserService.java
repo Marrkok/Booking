@@ -12,18 +12,18 @@ public class UserService
     @Autowired
     private User user;
 
-    public boolean login(String email, String password)
+    public boolean login(User loginUser)
     {
-        user=User.findByEmail(email);
-        if(user.getPassword().equals(password))
-        {
-            System.out.println("sucessfully logged in");
-            return true;
-        }
-        else
+        user=User.findByEmail(loginUser.getEmail());
+        if( user==null || !user.getPassword().equals(loginUser.getPassword()))
         {
             System.out.println("Login failed, please try again");
             return false;
+        }
+        else
+        {
+            System.out.println("sucessfully logged in");
+            return true;
         }
     }
     public boolean register(User NU)
@@ -43,12 +43,12 @@ public class UserService
   }
 
     @Component
-    public class UserInitializer {//remove once done
+    public class UserInitializer {
 
         @PostConstruct
         public void init() {
             if (User.users.isEmpty()) {
-                User.users.add(new User("JohnDoe", "john.doe@gmail.com", "1234", "1234567890", "Male", "25"));
+                User.users.add(new User("Mohamed ", "mohamed@gmail.com", "1234", "1234567890", "Male", "25"));
                 User.users.add(new User("JaneDoe", "jane.doe@gmail.com", "abcd", "0987654321", "Female", "30"));
             }
         }
