@@ -5,6 +5,10 @@ import com.OnlineBooking.OnlineBooking.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+
+import java.awt.*;
+import java.util.ArrayList;
+
 @RestController
 //@RequestMapping("/api/users")
 public class UserController
@@ -15,7 +19,7 @@ public class UserController
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User loginRequest) {
-        String email = loginRequest.getEmail();
+       try{ String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
         User user = User.findByEmail(email);
@@ -23,11 +27,23 @@ public class UserController
             return ResponseEntity.status(401).body("Invalid email or password");
         }
 
-        return ResponseEntity.ok("Login successful");
+        return ResponseEntity.ok("Login successful");}
+       catch (Exception e) {
+           System.out.println(e.getMessage());
+           return null;
+       }
     }
     @PostMapping("/register")
-    public boolean Register(String UserName, String email, String Password,String PhoneNumber, String Gender, String Age)
+    public boolean Register(@RequestBody User reginfo)
     {
-        return userService.register(UserName,email,Password,PhoneNumber,Gender,Age);
+        try {return userService.register(reginfo);}
+        catch (Exception e){
+            System.out.println("error registering user"+e.getMessage());
+            return false;
+        }
+    }
+    @GetMapping("/getem")
+    public ArrayList getusers(){
+        return User.users;
     }
 }

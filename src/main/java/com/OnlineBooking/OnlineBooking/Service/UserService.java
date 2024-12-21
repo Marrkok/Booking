@@ -26,21 +26,20 @@ public class UserService
             return false;
         }
     }
-    public boolean register(String UserName, String email, String Password,String PhoneNumber, String Gender, String Age)
+    public boolean register(User NU)
     {
-        user=User.findByEmail(email);
-       /* if(user.getPassword().equals(Password))
+        User existing=User.findByEmail(NU.getEmail());
+        if(existing!=null)
         {
-            System.out.println("the email and password already exist");
+            System.out.println("the Email already exist");
             return false;
         }
-        */
-        //else
+        else{
 
-            User newUser = new User( UserName,  email,  Password, PhoneNumber,  Gender, Age);
-            newUser.AddUser(user);
+            User newUser = new User( NU.getUserName(),  NU.getEmail(),  NU.getPassword(), NU.getPhoneNumber(),  NU.getGender(), NU.getAge());
+            User.users.add(newUser);
             System.out.println("Register successful");
-            return true;
+            return true;}
   }
 
     @Component

@@ -1,1 +1,2 @@
-//TODO: only the login is functional the register needs to be rewritten and other controller level methods
+//DONE:Login and register fixed
+//TODO: fix the rest of the controller level functions
