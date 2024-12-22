@@ -1,2 +1,5 @@
 //DONE:Login and register fixed
 //TODO: fix the rest of the controller level functions
+//TODO: add eventbooking and Hotelroom classes
+//TODO : implement the search functiosn
+//TODO: NOTIFICATION Module
