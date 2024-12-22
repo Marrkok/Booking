@@ -46,19 +46,23 @@ public class EventBookingService
        }
     }
 
-    public boolean bookEvent(String eventName,int num_tickets)
+    public String bookEvent(String eventName,int num_tickets)
     {
         eventBooking =EventBooking.FindByEventName(eventName);
         if(eventBooking==null)
         {
-                System.out.println("event not found,can't book"+"   ");
-                return false ;
+            System.out.println("event not found");
+                return "event not found,can't book" ;
         }
         else
-        {
-            eventBooking.setAvailableTickets(eventBooking.getTotalTickets()-num_tickets);
+        {   if(eventBooking.getAvailableTickets()<num_tickets){
+            System.out.println("available tickets not enough");
+            return "available tickets not enough" ;
+        }
+            else
+            eventBooking.setAvailableTickets(eventBooking.getAvailableTickets()-num_tickets);
             System.out.println("confirm booking");
-            return true ;
+            return "confirm booking" ;
         }
     }
     @Component

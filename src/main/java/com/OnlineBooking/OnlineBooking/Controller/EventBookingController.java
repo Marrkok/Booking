@@ -33,16 +33,20 @@ public class EventBookingController
     {
         String EventName = (String) events.get("EventName");
         int NumTickets=(int)events.get("NumTickets");
-        try
+            try
         {
-          if (eventBookingService.bookEvent(EventName,NumTickets))
+          if (eventBookingService.bookEvent(EventName,NumTickets).startsWith("confirm"))
           {
              return  ResponseEntity.ok("Event Booked");
           }
-          else
+          else if (eventBookingService.bookEvent(EventName,NumTickets).startsWith("event not"))
           {
-              return  ResponseEntity.status(401).body("invalid booking");
+              return  ResponseEntity.status(404).body("invalid booking, "+eventBookingService.bookEvent(EventName,NumTickets));
           }
+          else if (eventBookingService.bookEvent(EventName,NumTickets).startsWith("available tickets not enough")){
+              return  ResponseEntity.status(400).body("invalid booking, "+eventBookingService.bookEvent(EventName,NumTickets));
+          }
+          else return  ResponseEntity.status(500).body("Internal Server Error");
 
         }
         catch(Exception e)
@@ -79,7 +83,7 @@ public class EventBookingController
         return User.users;
     }
      */
-    @GetMapping("/getEvents")
+    @GetMapping("/events/getem")
     public ArrayList getEvents(){
         return EventBooking.events;
     }

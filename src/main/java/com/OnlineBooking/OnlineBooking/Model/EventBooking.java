@@ -31,6 +31,7 @@ public class EventBooking extends Booking
         this.eventDescription = eventDescription;
         this.eventDate = eventDate;
         this.TotalTickets= totalTickets;
+        this.AvailableTickets=TotalTickets;
         this.Price = Price;
     }
 
