@@ -1,6 +1,6 @@
 package com.OnlineBooking.OnlineBooking.Controller;
 
-import com.OnlineBooking.OnlineBooking.Model.EventBooking;
+import com.OnlineBooking.OnlineBooking.Model.Event;
 import com.OnlineBooking.OnlineBooking.Model.User;
 import com.OnlineBooking.OnlineBooking.Service.EventBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +85,7 @@ public class EventBookingController
      */
     @GetMapping("/events/getem")
     public ArrayList getEvents(){
-        return EventBooking.events;
+        return Event.events;
     }
 }
 

@@ -5,12 +5,10 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 
 @Component
-public class EventBooking extends Booking
+public class Event extends Booking
 {
-    public  static  ArrayList<EventBooking> events = new ArrayList<>();
 
-
-
+    public static ArrayList<Event> events= new ArrayList<>();
     private int eventID;
     private String eventName;
     private String eventLocation;
@@ -19,12 +17,12 @@ public class EventBooking extends Booking
     private int TotalTickets;
     private int Price;
     private int AvailableTickets;
-    public String BookingID;
+    private String BookingID="E";
     public String BookingDate ;
     public String UserID;
 
-    public EventBooking(){};
-    public EventBooking(int eventID, String eventName, String eventLocation, String eventDescription, String eventDate, int totalTickets,int Price) {
+    public Event(){};
+    public Event(int eventID, String eventName, String eventLocation, String eventDescription, String eventDate, int totalTickets,int Price) {
         this.eventID = eventID;
         this.eventName = eventName;
         this.eventLocation = eventLocation;
@@ -115,18 +113,18 @@ public class EventBooking extends Booking
         Price = price;
     }
 
-    public void addEvent(EventBooking e)
+    public void addEvent(Event e)
     {
         events.add(e);
     }
-    public void RemoveEvent(EventBooking e)
+    public void RemoveEvent(Event e)
     {
         events.remove(e);
     }
 
-    public static EventBooking FindByEventName(String eventName)
+    public static Event FindByEventName(String eventName)
     {
-        for(EventBooking e : events)
+        for(Event e : events)
         {
             if(e.getEventName().equals(eventName))
             {
@@ -135,5 +133,5 @@ public class EventBooking extends Booking
         }
         return null;
     }
-
+    
 }
