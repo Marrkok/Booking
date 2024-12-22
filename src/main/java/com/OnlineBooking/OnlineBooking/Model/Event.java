@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 
 @Component
-public class Event extends Booking
+public class Event
 {
 
     public static ArrayList<Event> events= new ArrayList<>();
@@ -18,8 +18,6 @@ public class Event extends Booking
     private int Price;
     private int AvailableTickets;
     private String BookingID="E";
-    public String BookingDate ;
-    public String UserID;
 
     public Event(){};
     public Event(int eventID, String eventName, String eventLocation, String eventDescription, String eventDate, int totalTickets,int Price) {
@@ -133,5 +131,5 @@ public class Event extends Booking
         }
         return null;
     }
-    
+
 }

@@ -72,8 +72,8 @@ public class EventBookingService
         public void init() {
             if (Event.events.isEmpty())
             {
-                Event.events.add(new Event(101,"Music Fest 2024","New York","A grand musical evening with top artists!","2024-12-31",500,1500));
-                Event.events.add(new Event(102,"Marwan Pablo concert","Cairo,almaza park mall","A grand musical evening with marwan pablo ","2024-12-31",1000,1000));
+                Event.addEvent(new Event(101,"Music Fest 2024","New York","A grand musical evening with top artists!","2024-12-31",500,1500));
+                Event.addEvent(new Event(1033,"Marwan Pablo concert","Cairo,almaza park mall","A grand musical evening with marwan pablo ","2024-12-31",1000,1000));
             }
         }
     }
