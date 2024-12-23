@@ -1,135 +1,125 @@
 package com.OnlineBooking.OnlineBooking.Model;
 
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 
-@Component
 public class Event
 {
 
-    public static ArrayList<Event> events= new ArrayList<>();
-    private int eventID;
+    public static ArrayList<Event> events = new ArrayList<>();
     private String eventName;
-    private String eventLocation;
     private String eventDate;
+    private String eventLocation;
     private String eventDescription;
-    private int TotalTickets;
-    private int Price;
-    private int AvailableTickets;
-    private String BookingID="E";
+    private int ticketsAvailable;
+    private int ticketsBooked;
+    private double price;
 
-    public Event(){};
-    public Event(int eventID, String eventName, String eventLocation, String eventDescription, String eventDate, int totalTickets,int Price) {
-        this.eventID = eventID;
+
+    public Event(String eventName, String eventDate, String eventLocation, String eventDescription, int ticketsAvailable, double price) {
         this.eventName = eventName;
+        this.eventDate = eventDate;
         this.eventLocation = eventLocation;
         this.eventDescription = eventDescription;
-        this.eventDate = eventDate;
-        this.TotalTickets= totalTickets;
-        this.AvailableTickets=TotalTickets;
-        this.Price = Price;
+        this.ticketsAvailable = ticketsAvailable;
+        this.ticketsBooked = 0;
+        this.price = price;
     }
 
-    public int getEventID()
-    {
-        System.out.print("Event ID: " + eventID);
-        return eventID;
-    }
-
-    public void setEventID(int eventID) {
-        this.eventID = eventID;
-    }
 
     public String getEventName()
     {
-        System.out.print("Event Name: " + eventName);
         return eventName;
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
-
-    public String getEventLocation()
+    public void setEventName(String eventName)
     {
-        System.out.print("Event Location: " + eventLocation);
-        return eventLocation;
-    }
-
-    public void setEventLocation(String eventLocation) {
-        this.eventLocation = eventLocation;
+        this.eventName = eventName;
     }
 
     public String getEventDate()
     {
-        System.out.print("Event Date: " + eventDate);
         return eventDate;
     }
 
-    public void setEventDate(String eventDate) {
+    public void setEventDate(String eventDate)
+    {
         this.eventDate = eventDate;
+    }
+
+    public String getEventLocation()
+    {
+        return eventLocation;
+    }
+
+    public void setEventLocation(String eventLocation)
+    {
+        this.eventLocation = eventLocation;
     }
 
     public String getEventDescription()
     {
-        System.out.print("Event Description: " + eventDescription);
+
         return eventDescription;
     }
 
-    public void setEventDescription(String eventDescription) {
+    public void setEventDescription(String eventDescription)
+    {
+
         this.eventDescription = eventDescription;
     }
 
-    public int getTotalTickets()
+    public int getTicketsAvailable()
     {
-        System.out.print("Total Tickets: " + TotalTickets);
-        return TotalTickets;
+
+        return ticketsAvailable;
     }
 
-    public void setTotalTickets(int totalTickets) {
-        TotalTickets = totalTickets;
-    }
-
-    public int getAvailableTickets()
+    public void setTicketsAvailable(int ticketsAvailable)
     {
-        System.out.print("Available Tickets: " + AvailableTickets);
-        return AvailableTickets;
+
+        this.ticketsAvailable = ticketsAvailable;
     }
 
-    public void setAvailableTickets(int availableTickets) {
-        AvailableTickets = availableTickets;
-    }
-
-    public int getPrice()
+    public int getTicketsBooked()
     {
-        System.out.print("Price: " + Price);
-        return Price;
+
+        return ticketsBooked;
     }
 
-    public void setPrice(int price) {
-        Price = price;
+    public void setTicketsBooked(int ticketsBooked)
+    {
+
+        this.ticketsBooked = ticketsBooked;
     }
 
-    public void addEvent(Event e)
+    public double getPrice()
     {
-        events.add(e);
-    }
-    public void RemoveEvent(Event e)
-    {
-        events.remove(e);
+
+        return price;
     }
 
-    public static Event FindByEventName(String eventName)
+    public void setPrice(double price)
     {
-        for(Event e : events)
+        this.price = price;
+    }
+
+
+    public void bookTickets(int numTickets)
+    {
+        if (numTickets <= ticketsAvailable)
         {
-            if(e.getEventName().equals(eventName))
-            {
-                return e;
-            }
+            ticketsBooked += numTickets;
+            ticketsAvailable -= numTickets;
         }
-        return null;
+        else
+        {
+            throw new IllegalArgumentException("Not enough tickets available");
+        }
     }
 
+
+    public static void addEvent(Event event)
+    {
+        events.add(event);
+    }
 }

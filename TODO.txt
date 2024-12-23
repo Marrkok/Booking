@@ -1,5 +1,7 @@
 //DONE:Login and register fixed
 //TODO: fix the rest of the controller level functions
-//TODO: add eventbooking and Hotelroom classes
-//TODO : implement the search functiosn
-//TODO: NOTIFICATION Module
+note :  I have not tested whether the class hotel booking works or not.
+need to 
+1-test the search for event and hotel booking
+2- add new event
+3- add notifications need then called in two types of booking

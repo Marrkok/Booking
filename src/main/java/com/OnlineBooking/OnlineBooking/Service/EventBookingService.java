@@ -1,80 +1,55 @@
 package com.OnlineBooking.OnlineBooking.Service;
 
 import com.OnlineBooking.OnlineBooking.Model.Event;
-import com.OnlineBooking.OnlineBooking.Model.User;
-import jakarta.annotation.PostConstruct;
+import com.OnlineBooking.OnlineBooking.Model.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EventBookingService
 {
-    @Autowired
-    private Event Event;
 
-    public boolean AddEvent(Event EVU)
+
+    public String searchEvents(String eventName)
     {
-        Event existing=Event.FindByEventName(EVU.getEventName());
-        if(existing!=null)
+        for (Event event : Event.events)
         {
-            System.out.println("the Event Already Exists");
-            return false;
-        }
-        else{
-
-            Event newEvent= new Event(EVU.getEventID(),EVU.getEventName(),EVU.getEventLocation(),EVU.getEventDescription(),EVU.getEventDate(),EVU.getTotalTickets(),EVU.getTotalTickets());
-            Event.events.add(newEvent);
-            System.out.println("Successfully Added Event");
-            return true;}
-    }
-
-
-    public boolean searchEvents(String eventName)
-    {
-      Event =Event.FindByEventName(eventName);
-       if(Event.getEventName()==eventName)
-       {
-           System.out.println(Event.getEventDate()+" "+Event.getEventDescription()+" "+Event.getEventLocation());
-           System.out.println(Event.getAvailableTickets()+" "+Event.getPrice());
-           return true ;
-       }
-       else
-       {
-           System.out.println("event not found");
-           return false ;
-       }
-    }
-
-    public String bookEvent(String eventName,int num_tickets)
-    {
-        Event =Event.FindByEventName(eventName);
-        if(Event==null)
-        {
-            System.out.println("event not found");
-                return "event not found,can't book" ;
-        }
-        else
-        {   if(Event.getAvailableTickets()<num_tickets){
-            System.out.println("available tickets not enough");
-            return "available tickets not enough" ;
-        }
-            else{
-            Event.setAvailableTickets(Event.getAvailableTickets()-num_tickets);
-            System.out.println("confirm booking");
-            return "confirm booking" ;}
-        }
-    }
-    @Component
-    public class EventInitializer {
-
-        @PostConstruct
-        public void init() {
-            if (Event.events.isEmpty())
+            if (event.getEventName().equalsIgnoreCase(eventName))
             {
-                Event.addEvent(new Event(101,"Music Fest 2024","New York","A grand musical evening with top artists!","2024-12-31",500,1500));
-                Event.addEvent(new Event(1033,"Marwan Pablo concert","Cairo,almaza park mall","A grand musical evening with marwan pablo ","2024-12-31",1000,1000));
+                return "Event found: " + eventName;
             }
         }
+        return "Event not found";
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+    public String bookEvent(String eventName, int numTickets)
+    {
+        for (Event event : Event.events)
+        {
+            if (event.getEventName().equalsIgnoreCase(eventName))
+            {
+                if (event.getTicketsAvailable() >= numTickets)
+                {
+                    event.bookTickets(numTickets);
+                    return "confirm booking";
+                }
+                else
+                {
+                    return "available tickets not enough";
+                }
+            }
+        }
+        return "event not found";
+    }
+ /////////////////////////////////////////////////////////////////////////////////////////////////
+    public String getBookedEvents() {
+        StringBuilder bookedEvents = new StringBuilder();
+        for (Event event : Event.events) {
+            bookedEvents.append("Event: ").append(event.getEventName())
+                    .append(", Tickets Booked: ").append(event.getTicketsBooked())
+                    .append(", Tickets Available: ").append(event.getTicketsAvailable())
+                    .append("\n");
+        }
+        return bookedEvents.toString();
     }
 }
