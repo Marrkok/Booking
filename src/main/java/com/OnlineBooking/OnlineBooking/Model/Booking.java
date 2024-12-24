@@ -1,32 +1,36 @@
 package com.OnlineBooking.OnlineBooking.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Booking
-{
+{   @JsonProperty("bookingID")
     public String BookingID;
+    @JsonProperty("bookingDate")
     public String BookingDate ;
-    public String UserID;
+    @JsonProperty("userID")
+    public int UserID;
 
     public String getBookingID() {
         return BookingID;
     }
 
-    public void setBookingID(String bookingID) {
-        BookingID = bookingID;
+    public void setBookingID(String BookingID) {
+        this.BookingID = BookingID;
     }
 
     public String getBookingDate() {
         return BookingDate;
     }
 
-    public void setBookingDate(String bookingDate) {
-        BookingDate = bookingDate;
+    public void setBookingDate(String BookingDate) {
+        this.BookingDate = BookingDate;
     }
 
-    public String getUserID() {
+    public int getUserID() {
         return UserID;
     }
 
-    public void setUserID(String userID) {
-        UserID = userID;
+    public void setUserID(int UserID) {
+        this.UserID = UserID;
     }
 }

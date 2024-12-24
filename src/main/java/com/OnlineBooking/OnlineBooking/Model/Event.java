@@ -6,6 +6,16 @@ public class Event
 {
 
     public static ArrayList<Event> events = new ArrayList<>();
+
+    public int getEventID() {
+        return eventID;
+    }
+
+    public void setEventID(int eventID) {
+        this.eventID = eventID;
+    }
+
+    private int eventID;
     private String eventName;
     private String eventDate;
     private String eventLocation;
@@ -23,6 +33,7 @@ public class Event
         this.ticketsAvailable = ticketsAvailable;
         this.ticketsBooked = 0;
         this.price = price;
+        eventID= events.size()+1;
     }
 
 

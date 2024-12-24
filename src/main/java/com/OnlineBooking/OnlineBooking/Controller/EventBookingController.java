@@ -106,8 +106,9 @@ public class EventBookingController {
     @GetMapping("/events/getem")
     public ArrayList<Event> getEvents()
     {
-
         return Event.events;
     }
+    @GetMapping("/eventbookings/getem")
+    public ArrayList getHotelbookings(){return eventBookingService.getEventBookings();}
 
 }

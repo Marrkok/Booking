@@ -5,6 +5,7 @@ package com.OnlineBooking.OnlineBooking.Model;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 
+
 @Component
 public class User
 {
@@ -22,6 +23,7 @@ public class User
     public User(String UserName, String email, String Password,String PhoneNumber, String Gender, String Age)
     {
         this.UserName = UserName;
+        this.userID=users.size()+1;
         this.email = email;
         this.Password = Password;
         this.PhoneNumber = PhoneNumber;
@@ -100,6 +102,14 @@ public class User
         {
             if(user.getEmail().equals(email))
             {
+                return user;
+            }
+        }
+        return null;
+    }
+    public static User findByid(int userID){
+        for (User user : users) {
+            if (user.getUserID() == userID) {
                 return user;
             }
         }

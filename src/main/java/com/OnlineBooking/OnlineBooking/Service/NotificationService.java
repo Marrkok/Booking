@@ -2,6 +2,7 @@ package com.OnlineBooking.OnlineBooking.Service;
 
 import com.OnlineBooking.OnlineBooking.Model.Notification;
 import com.OnlineBooking.OnlineBooking.Model.NotificationTemplate;
+import com.OnlineBooking.OnlineBooking.Model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

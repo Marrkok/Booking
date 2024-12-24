@@ -4,12 +4,12 @@ public class Notification
 {
 
     private String message;
-    private String recipient;
+    private String recipientEmail;
 
 
-    public Notification(String message, String recipient) {
+    public Notification(String message, String recipientEmail) {
         this.message = message;
-        this.recipient = recipient;
+        this.recipientEmail = recipientEmail;
     }
 
     public String getMessage() {
@@ -21,10 +21,10 @@ public class Notification
     }
 
     public String getRecipient() {
-        return recipient;
+        return recipientEmail;
     }
 
-    public void setRecipient(String recipient) {
-        this.recipient = recipient;
+    public void setRecipient(String recipientEmail) {
+        this.recipientEmail = recipientEmail;
     }
 }

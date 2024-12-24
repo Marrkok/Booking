@@ -1,7 +1,8 @@
-//DONE:Login and register fixed
-//TODO: fix the rest of the controller level functions
-note :  I have not tested whether the class hotel booking works or not.
-need to 
-1-test the search for event and hotel booking
-2- add new event
-3- add notifications need then called in two types of booking
+DONE:Login and register
+done: 2- add new event
+done I think TODO: fix the rest of the controller level functions
+fixed ::note :  I have not tested whether the class hotel booking works or not.
+todo: test the search for event and hotel booking
+todo add notifications need then called in two types of booking
+todo add notification logic in the controller
+lookup other todos on whatsapp

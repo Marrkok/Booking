@@ -2,6 +2,7 @@ package com.OnlineBooking.OnlineBooking.Controller;
 
 import com.OnlineBooking.OnlineBooking.Model.User;
 import com.OnlineBooking.OnlineBooking.Service.UserService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +24,17 @@ public class UserController
             String password = loginRequest.getPassword();
 
             User user = User.findByEmail(email);
-            if (!userService.login(loginRequest)) {
+            String check= userService.login(loginRequest);
+            if (check.contains("failed")) {
                 return ResponseEntity.status(401).body("Invalid email or password");
             }
-
+            else if (check.contains("already")) {
+                return ResponseEntity.status(401).body(" A User is already logged in ");
+            }
             return ResponseEntity.ok("Login successful");}
         catch (Exception e) {
             System.out.println(e.getMessage());
-            return null;
+            return ResponseEntity.status(500).body("Error during login: "+e.getMessage());
         }
     }
     @PostMapping("/register")
@@ -52,8 +56,12 @@ public class UserController
             return ResponseEntity.status(500).body(message);
         }
     }
+    @PostMapping("/user/logout")
+    public void logout(){
+        userService.logout();
+    }
     @GetMapping("/getem")
-    public ArrayList getusers(){
+    public ArrayList getUsers(){
         return User.users;
     }
 }

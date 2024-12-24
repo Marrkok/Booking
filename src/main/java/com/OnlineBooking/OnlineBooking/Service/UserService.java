@@ -11,19 +11,24 @@ public class UserService
 {
     @Autowired
     private User user;
-
-    public boolean login(User loginUser)
+    private static Integer loggedUserId=null;
+    public String login(User loginUser)
     {
         user=User.findByEmail(loginUser.getEmail());
-        if( user==null || !user.getPassword().equals(loginUser.getPassword()))
+        if(loggedUserId!=null){
+            System.out.println("A User is logged in already");
+            return "A User is logged in already";
+        }
+        else if(loggedUserId==null&&user.getPassword().equals(loginUser.getPassword())&&user!=null)
         {
-            System.out.println("Login failed, please try again");
-            return false;
+            loggedUserId=user.getUserID();
+            System.out.println("sucessfully logged in");
+            return "successfully logged in";
         }
         else
         {
-            System.out.println("sucessfully logged in");
-            return true;
+            System.out.println("Login failed, please try again");
+            return "Login failed, please try again";
         }
     }
     public boolean register(User NU)
@@ -40,6 +45,12 @@ public class UserService
             User.users.add(newUser);
             System.out.println("Register successful");
             return true;}
+  }
+  public void logout(){
+        loggedUserId=null;
+  }
+  public static int getsession(){
+        return loggedUserId;
   }
 
     @Component

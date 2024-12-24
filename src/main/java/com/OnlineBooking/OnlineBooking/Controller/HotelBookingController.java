@@ -41,7 +41,7 @@ public class HotelBookingController
     }
     ///////////////////////////////////////////////////////////////////////////////////
     @PostMapping("/book/Hotel")
-    public ResponseEntity<String> bookEvents(@RequestBody Map<String,Object> hotels)
+    public ResponseEntity<String> bookHotels(@RequestBody Map<String,Object> hotels)
     {
         String HotelName = (String) hotels.get("HotelName");
         int num_rooms=(int)hotels.get("NumRooms");
@@ -69,7 +69,7 @@ public class HotelBookingController
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @PostMapping("/search/hotels")
-    public ResponseEntity<String> searchEvents(@RequestBody String hotelName) {
+    public ResponseEntity<String> searchHotels(@RequestBody String hotelName) {
 
         try {
             hotelBookingService.searchhotels(hotelName);
@@ -84,4 +84,6 @@ public class HotelBookingController
     @GetMapping("/hotels/getem")
     public ArrayList getHotels(){return Hotel.hotels;
     }
+    @GetMapping("/hotelbookings/getem")
+    public ArrayList getHotelbookings(){return hotelBookingService.getHotelBookings();}
 }
