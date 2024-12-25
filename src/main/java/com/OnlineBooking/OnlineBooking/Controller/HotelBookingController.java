@@ -82,7 +82,9 @@ public class HotelBookingController
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/hotels/getem")
-    public ArrayList getHotels(){return Hotel.hotels;
+    public ArrayList getHotels(){
+        Hotel.Fetch();
+        return Hotel.hotels;
     }
     @GetMapping("/hotelbookings/getem")
     public ArrayList getHotelbookings(){return hotelBookingService.getHotelBookings();}

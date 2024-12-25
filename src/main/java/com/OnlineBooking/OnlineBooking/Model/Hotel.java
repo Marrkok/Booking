@@ -1,14 +1,17 @@
 package com.OnlineBooking.OnlineBooking.Model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
-
+import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class Hotel
 {
-
-    public static ArrayList<Hotel> hotels= new ArrayList<>();
+    public static ArrayList<Hotel> hotels=new ArrayList<>();
 
     private int hotelID;
     private String hotelName;
@@ -21,14 +24,14 @@ public class Hotel
 
     public Hotel(){};
 
-    public Hotel(int hotelID, String hotelName, String hotelAddress, String RoomType, int TotalRooms, int AvailableRooms, int Price)
+    public Hotel(int hotelID, String hotelName, String hotelAddress, String RoomType, int TotalRooms, int Price)
     {
         this.hotelID = hotelID;
         this.hotelName = hotelName;
         this.hotelAddress = hotelAddress;
         this.RoomType = RoomType;
         this.TotalRooms = TotalRooms;
-        this.AvailableRooms = AvailableRooms;
+        this.AvailableRooms = TotalRooms;
         this.Price = Price;
     }
 
@@ -116,7 +119,25 @@ public class Hotel
                 return h;
             }
         }
+
         return null;
+    }
+    public static void Fetch() {
+        String url = "https://6765c5a6410f849996561d54.mockapi.io/api/v1/Hotels";
+        RestTemplate restTemplate = new RestTemplate();
+        // Use ParameterizedTypeReference to tell RestTemplate the type of the list
+        ResponseEntity<List<Hotel>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Hotel>>() {}
+        );
+
+        List<Hotel> hotelsList = response.getBody();
+
+        if (hotels != null) {
+            hotels.addAll(hotelsList);
+        }
     }
 
 }

@@ -44,6 +44,9 @@ public class EventBooking extends Booking {
         this.EventName = hotelName;
     }
 
+    public String getEventdate() {
+        return Eventdate;
+    }
 
     public String getEventdescription() {
         return Eventdescription;

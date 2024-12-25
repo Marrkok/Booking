@@ -66,6 +66,17 @@ public class EventBookingService
     public ArrayList<EventBooking> getEventBookings() {
         return eventBookings;
     }
+    public ArrayList<EventBooking> getEventBookingsBYID(int userID) {
+        ArrayList<EventBooking> userBook=new ArrayList<>();
+        for(EventBooking booking: eventBookings ) {
+            if(booking.getUserID()==userID){
+                userBook.add(booking);
+            }
+
+        }
+        return userBook;
+    }
+
     @Component
     public class EventInitializer {
 

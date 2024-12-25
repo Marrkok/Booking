@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 public class NotificationService {
-
+    User user;
     private List<Notification> notificationQueue = new ArrayList<>();
     private List<NotificationTemplate> templates = new ArrayList<>();
 
@@ -32,14 +32,23 @@ public class NotificationService {
         templates.add(template);
     }
 
-
+ 
     public NotificationTemplate getTemplateByName(String templateName) {
         return templates.stream()
                 .filter(template -> template.getName().equals(templateName))
                 .findFirst()
                 .orElse(null); // Return null if template is not found
     }
-
+   public  ArrayList<Notification> getNotificationsForUser(int ID){
+        ArrayList<Notification> notifications = new ArrayList<>();
+        for (Notification notification : notificationQueue) {
+            if (notification.getRecipient().equals(user.findByid(ID).getEmail()))
+            {
+                notifications.add(notification);
+            }
+        }
+        return notifications;
+    }
 
     public List<Notification> getNotificationQueue() {
         return notificationQueue;

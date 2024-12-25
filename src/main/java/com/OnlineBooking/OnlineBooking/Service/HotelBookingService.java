@@ -19,6 +19,9 @@ public class HotelBookingService
     private Hotel hotel;
     public ArrayList<HotelBooking> hotelBookings=new ArrayList<>();
     private UserService userService;
+    @Autowired
+    private User user;
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     public boolean AddHotel(Hotel newHotel)
     {
@@ -30,7 +33,7 @@ public class HotelBookingService
         }
         else{
 
-            Hotel newh = new Hotel(newHotel.getHotelID(),newHotel.getHotelName(),newHotel.getHotelAddress(),newHotel.getRoomType(),newHotel.getTotalRooms(),newHotel.getAvailableRooms(),newHotel.getPrice());
+            Hotel newh = new Hotel(newHotel.getHotelID(),newHotel.getHotelName(),newHotel.getHotelAddress(),newHotel.getRoomType(),newHotel.getTotalRooms(),newHotel.getPrice());
             Hotel.hotels.add(newh);
             System.out.println("successfully added hotel");
             return true;}
@@ -93,9 +96,19 @@ public class HotelBookingService
        HotelBooking hb = new HotelBooking(hotelb,ID,num_rooms);
         hotelBookings.add(hb);
     }
-
     public ArrayList<HotelBooking> getHotelBookings() {
-        return hotelBookings;
+      return hotelBookings;
+    }
+
+    public ArrayList<HotelBooking> getHotelBookingsBYID(int userID) {
+        ArrayList<HotelBooking> userBook=new ArrayList<>();
+        for(HotelBooking booking: hotelBookings ) {
+            if(booking.getUserID()==userID){
+                userBook.add(booking);
+            }
+
+        }
+        return userBook;
     }
 
     @Component
@@ -105,8 +118,8 @@ public class HotelBookingService
         public void init() {
             if (Hotel.hotels.isEmpty())
             {
-                hotel.addHotel(new Hotel(102,"Four Seasons Madrid","Madrid","double",1000,500,150));
-                hotel.addHotel(new Hotel(103,"Hotel Bel-Air","Los Angeles","Single",500,500,300));
+                hotel.addHotel(new Hotel(102,"Four Seasons Madrid","Madrid","double",1000,150));
+                hotel.addHotel(new Hotel(103,"Hotel Bel-Air","Los Angeles","Single",500,300));
             }
         }
     }
