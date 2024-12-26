@@ -13,8 +13,11 @@ public class EventBookingService
 {
    private Event event;
    private ArrayList<EventBooking> eventBookings=new ArrayList<>();
-   private UserService userService;
-
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private NotificationService notificationService;
+    private User loggedUser;
     public String searchEvents(String eventName)
     {
         for (Event event : Event.events)
@@ -28,13 +31,15 @@ public class EventBookingService
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
     public String bookEvent(String eventName, int numTickets)
-    {
+    {  loggedUser=loggedUser.findByid(userService.getsession());
+        if(loggedUser!=null) {
         for (Event event : Event.events)
         {
             if (event.getEventName().equalsIgnoreCase(eventName))
             {
                 if (event.getTicketsAvailable() >= numTickets)
                 {
+                    notificationService.addNotificationToQueue(new Notification("Your booking for "+eventName +" has been confirmed!",loggedUser.getEmail()));
                     event.bookTickets(numTickets);
                     addBooking(event,UserService.getsession(),numTickets);
                     return "confirm booking";
@@ -45,7 +50,8 @@ public class EventBookingService
                 }
             }
         }
-        return "event not found";
+        return "event not found";}
+        else return "User not logged in, please login first";
     }
  /////////////////////////////////////////////////////////////////////////////////////////////////
     public String getBookedEvents() {

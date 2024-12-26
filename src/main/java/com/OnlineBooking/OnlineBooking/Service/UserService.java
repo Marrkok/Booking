@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class UserService
 {
     @Autowired
-    private User user;
+    public User user;
     private static Integer loggedUserId=null;
     public String login(User loginUser)
     {
@@ -19,7 +19,7 @@ public class UserService
             System.out.println("A User is logged in already");
             return "A User is logged in already";
         }
-        else if(loggedUserId==null&&user.getPassword().equals(loginUser.getPassword())&&user!=null)
+        else if(loggedUserId==null&&user!=null&&user.getPassword().equals(loginUser.getPassword())&&user!=null)
         {
             loggedUserId=user.getUserID();
             System.out.println("sucessfully logged in");
@@ -49,8 +49,9 @@ public class UserService
   public void logout(){
         loggedUserId=null;
   }
-  public static int getsession(){
-        return loggedUserId;
+  public static Integer getsession(){
+        if (loggedUserId!= null)return loggedUserId;
+        else return -1;
   }
 
     @Component

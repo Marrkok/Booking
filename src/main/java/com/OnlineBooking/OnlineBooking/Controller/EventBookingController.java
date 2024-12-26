@@ -30,6 +30,8 @@ public class EventBookingController {
                 return ResponseEntity.status(404).body("Invalid booking, " + bookingResponse);
             } else if (bookingResponse.startsWith("available tickets not enough")) {
                 return ResponseEntity.status(400).body("Invalid booking, " + bookingResponse);
+            } else if (bookingResponse.startsWith("User")) {
+                return ResponseEntity.status(404).body(bookingResponse);
             } else {
                 return ResponseEntity.status(500).body("Internal Server Error");
             }

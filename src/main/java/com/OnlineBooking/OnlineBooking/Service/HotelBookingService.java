@@ -1,9 +1,6 @@
 package com.OnlineBooking.OnlineBooking.Service;
 
-import com.OnlineBooking.OnlineBooking.Model.Event;
-import com.OnlineBooking.OnlineBooking.Model.Hotel;
-import com.OnlineBooking.OnlineBooking.Model.HotelBooking;
-import com.OnlineBooking.OnlineBooking.Model.User;
+import com.OnlineBooking.OnlineBooking.Model.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,11 +14,13 @@ public class HotelBookingService
 {
     @Autowired
     private Hotel hotel;
-    public ArrayList<HotelBooking> hotelBookings=new ArrayList<>();
-    private UserService userService;
-    @Autowired
-    private User user;
 
+    @Autowired
+    private UserService userService;
+   @Autowired
+    private NotificationService notificationService;
+    public ArrayList<HotelBooking> hotelBookings=new ArrayList<>();
+    User loggedUser;
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     public boolean AddHotel(Hotel newHotel)
     {
@@ -41,7 +40,8 @@ public class HotelBookingService
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     public String BookHotel(String HotelName,int num_rooms)
-    {
+    {   loggedUser=loggedUser.findByid(UserService.getsession());
+        if(loggedUser!=null){
         hotel=Hotel.FindByHotelName(HotelName);
         if(hotel==null)
         {
@@ -57,8 +57,11 @@ public class HotelBookingService
             addBooking(hotel,userService.getsession(),num_rooms);
             hotel.setAvailableRooms(hotel.getAvailableRooms()-num_rooms);
             System.out.println("confirm booking");
+            notificationService.addNotificationToQueue(new Notification("Your booking for "+HotelName +" has been confirmed!",loggedUser.getEmail()));
             return "confirm booking" ;}
         }
+        }
+        else return "User not logged in please log in first";
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     public String searchhotels(String hotelName)
@@ -109,6 +112,10 @@ public class HotelBookingService
 
         }
         return userBook;
+    }
+
+    public UserService getUserService() {
+        return userService;
     }
 
     @Component

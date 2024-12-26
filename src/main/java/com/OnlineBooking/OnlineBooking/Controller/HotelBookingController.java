@@ -45,20 +45,22 @@ public class HotelBookingController
     {
         String HotelName = (String) hotels.get("HotelName");
         int num_rooms=(int)hotels.get("NumRooms");
+        String response = hotelBookingService.BookHotel(HotelName,num_rooms);
         try
         {
-            if (hotelBookingService.BookHotel(HotelName,num_rooms).startsWith("confirm"))
+            if (response.startsWith("confirm"))
             {
                 return  ResponseEntity.ok("hotel rooms Booked");
             }
-            else if (hotelBookingService.BookHotel(HotelName,num_rooms).startsWith("hotel not"))
+            else if (response.startsWith("hotel not"))
             {
-                return  ResponseEntity.status(404).body("invalid booking, "+hotelBookingService.BookHotel(HotelName,num_rooms));
+                return  ResponseEntity.status(404).body("invalid booking, "+response);
             }
-            else if (hotelBookingService.BookHotel(HotelName,num_rooms).startsWith("available rooms not enough")){
-                return  ResponseEntity.status(400).body("invalid booking, "+hotelBookingService.BookHotel(HotelName,num_rooms));
-            }
-            else return  ResponseEntity.status(500).body("Internal Server Error");
+            else if (response.startsWith("available rooms not enough")){
+                return  ResponseEntity.status(400).body("invalid booking, "+response);
+            } else if (response.startsWith("User")) {
+                return ResponseEntity.status(404).body(response);
+            } else return  ResponseEntity.status(500).body("Internal Server Error");
 
         }
         catch(Exception e)

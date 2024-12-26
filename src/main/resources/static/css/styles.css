@@ -1,0 +1,92 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding-bottom: 50px; /* Space for footer */
+    background-color: #f4f4f4; /* Light background for the page */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 20px;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+}
+
+/* Header Styles */
+.header h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333; /* Ensures header has proper color */
+}
+
+/* Login Section */
+.login-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px; /* Set a max-width to limit the form size */
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%; /* Ensure input takes full width of its container */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    box-sizing: border-box; /* Ensures padding doesn't cause the input to overflow */
+}
+
+/* Submit Button */
+button[type="submit"] {
+    background-color: #4CAF50; /* Green button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%; /* Makes the button the same width as input fields */
+    border-radius: 5px;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Error Message */
+#errorMessage {
+    color: red;
+    text-align: center;
+    font-size: 14px;
+    display: none; /* Hidden by default */
+}
+
+/* Footer Styles */
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 12px;
+}

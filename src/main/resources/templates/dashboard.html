@@ -4,31 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard</title>
+    <link rel="stylesheet" href="/css/dashboard_style.css">  <!-- Link to your CSS -->
 </head>
 <body>
-<h1>Welcome, <span th:text="${user.userName}"></span>!</h1>
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <h1>Welcome, <span th:text="${user.userName}"></span>!</h1>
+        <!-- Logout button -->
+        <button id="logoutButton" class="logout-button">Logout</button>
+    </div>
 
+    <!-- Bookings Section -->
+    <div class="bookings-section">
+        <h2>Your Bookings:</h2>
+        <div class="event-bookings">
+            <h3>Events</h3>
+            <ul>
+                <li th:each="eventBooking : ${eventBookings}">
+                    <p th:text="'Event: ' + ${eventBooking.getEventName()} + ' - ' + ${eventBooking.getEventdate()} + ' - ' + ${eventBooking.getTicektesBooked()} + ' Tickets'"></p>
+                </li>
+            </ul>
+        </div>
+        <div class="hotel-bookings">
+            <h3>Hotels</h3>
+            <ul>
+                <li th:each="hotelBooking : ${hotelBookings}">
+                    <p th:text="'Hotel: ' + ${hotelBooking.getHotelName()} + ' - ' + ${hotelBooking.getRoomType()} + ' - ' + ${hotelBooking.getNum_rooms()} + ' Rooms'"></p>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-<h2>Your Bookings:</h2>
-<h3>Events</h3>
-<ul>
-    <li th:each="eventBooking : ${eventBookings}">
-        <p th:text="'Event: ' + ${eventBooking.getEventName()} + ' - ' + ${eventBooking.getEventdate()} + ' - ' + ${eventBooking.getTicektesBooked()} + ' Tickets'"></p>
-    </li>
-</ul>
+    <!-- Notifications Section -->
+    <div class="notifications-section">
+        <h2>Your Notifications:</h2>
+        <ul>
+            <li th:each="notification : ${notifications}">
+                <p th:text="'Message: ' + ${notification.message}"></p>
+            </li>
+        </ul>
+    </div>
 
-<h3>Hotels</h3>
-<ul>
-    <li th:each="hotelBooking : ${hotelBookings}">
-        <p th:text="'Hotel: ' + ${hotelBooking.getHotelName()} + ' - ' + ${hotelBooking.getRoomType()} + ' - ' + ${hotelBooking.getNum_rooms()} + ' Rooms'"></p>
-    </li>
-</ul>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Your Company. All rights reserved.</p>
+    </footer>
 
-<h2>Your Notifications:</h2>
-<ul>
-    <li th:each="notification : ${notifications}">
-        <p th:text="'Message: ' + ${notification.message}"></p>
-    </li>
-</ul>
+    <!-- Logout functionality -->
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', async function() {
+            try {
+                // Make a POST request to the /user/logout API endpoint
+                const response = await fetch('/user/logout', {
+                    method: 'POST',
+                });
+
+                if (response.ok) {
+                    // Redirect to the login page after logout
+                    window.location.href = '/login.html';
+                } else {
+                    console.error('Logout failed');
+                }
+            } catch (error) {
+                console.error('Error during logout:', error);
+            }
+        });
+    </script>
+</div>
 </body>
 </html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="/css/styles.css">  <!-- Link to your CSS -->
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <h1>Login</h1>
+  </div>
+
+  <!-- Login Form Section -->
+  <div class="login-section">
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit" class="btn">Login</button>
+      <p id="errorMessage" style="color: red; display: none;">Invalid email or password.</p>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 Online Booking. All rights reserved.</p>
+  </footer>
+</div>
+
+<script>
+  // Handle login form submission
+  document.getElementById('loginForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    // Get form values
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    // Create login data object
+    const loginData = {
+      email: email,
+      password: password
+    };
+
+    try {
+      // Make the POST request to the backend API
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(loginData)
+      });
+
+      if (response.ok) {
+        // Parse the response to extract the user ID
+        const responseText = await response.text(); // Get the response text (e.g., "Login successful 1234")
+
+        // Split the response to extract the user ID
+        const userId = responseText.split(' ')[2];  // Assuming the user ID is the third part of the response
+
+        // Redirect to dashboard with the user ID as a URL parameter
+        window.location.href = '/dashboard?userID=' + userId;
+      } else {
+        // Show error message if login failed
+        document.getElementById('errorMessage').style.display = 'block';
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      document.getElementById('errorMessage').style.display = 'block';
+    }
+  });
+</script>
+
+</body>
+</html>
